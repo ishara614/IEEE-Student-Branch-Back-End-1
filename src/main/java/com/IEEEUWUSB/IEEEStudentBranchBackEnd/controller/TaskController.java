@@ -47,12 +47,11 @@ public class TaskController {
             List<UserRoleDetails> userRoleDetailsExcom = userRoleDetailsServices.getuserRoleDetails(user, true, "EXCOM");
             boolean isTaskPolicyAvailable = userRoleDetailsServices.isPolicyAvailable(userRoleDetailsExcom, "EXCOM_TASK");
             if (isTaskPolicyAvailable) {
-                UserRoleDetails ownuserRoleDetailsExcom = userRoleDetailsServices.findByUserAndIsActiveAndType(user, true, "EXCOM");
                 try {
                     Task newTask = Task.builder()
                             .start_date(task.getStart_date())
                             .end_date(task.getEnd_date())
-                            .ou(isTaskPolicyAvailable ? ownuserRoleDetailsExcom.getOu() : ouService.getOUById(task.getOu_id()))
+                            .ou(ouService.getOUById(task.getOu_id()))
                             .task_name(task.getTask_name())
                             .type(task.getType())
                             .status("TODO")
